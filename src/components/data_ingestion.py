@@ -1,5 +1,7 @@
 import os 
 import sys
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
 from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
@@ -21,7 +23,7 @@ class DataIngestion:
         logging.info("Entered data ingestion component or method")
         try:
             df = pd.read_csv('/Users/soul/Downloads/MLproject2/notebook/data/stud.csv')
-            logging.info("read the dataset as dataframe")
+            logging.info("read the dataset as data frame")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
 
@@ -44,4 +46,7 @@ class DataIngestion:
         
 if __name__ == "__main__":
     obj=DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data,test_data)
